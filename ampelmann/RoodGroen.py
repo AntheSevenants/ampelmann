@@ -16,11 +16,13 @@ class RoodGroen(CaseStudy):
         doc = self.nlp.pipe(self.sentences)
         for sentence in tqdm(doc, total=len(self.sentences)):
             pos_tags = []
+            pos_tags_fine = []
             tokens = []
             lemmas = []
             
             for token in sentence:
                 pos_tags.append(token.pos_)
+                pos_tags_fine.append(token.tag_)
                 tokens.append(token.text)
                 lemmas.append(token.lemma_)
        
@@ -34,6 +36,10 @@ class RoodGroen(CaseStudy):
                     aux_index = index - 1
                     if aux_index < 0:
                         continue
+                        
+                # No infinitivus pro participio, thank you
+                if "inf" in pos_tags_fine[index]:
+                    continue
         
                 if pos_tags[aux_index] == "AUX":
                     filtered_sentences.append(sentence)
