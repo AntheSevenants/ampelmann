@@ -2,11 +2,16 @@ from ampelmann.CaseStudy import CaseStudy
 from tqdm.auto import tqdm
 import spacy
 
-class RoodGroen(CaseStudy):    
-    def filter(self, order):
+class RoodGroen(CaseStudy):
+    def __init__(self, sentences, closed_class_items, order):
+        super().__init__(sentences, closed_class_items)
+
         if order not in ["red", "green"]:
             raise Exception("Unrecognised order. Specify either 'red' or 'green' as the requested order.")
-    
+
+        self.order = order
+
+    def filter(self):
         self.nlp = spacy.load("nl_core_news_lg",  disable=["parser", "attribute_ruler"])
         
         filtered_sentences = []
@@ -28,11 +33,11 @@ class RoodGroen(CaseStudy):
        
             indices = [i for i, x in enumerate(pos_tags) if x == "VERB"]
             for index in indices:
-                if order == "green":
+                if self.order == "green":
                     aux_index = index + 1
                     if aux_index > len(pos_tags) - 1:
                         continue
-                elif order == "red":
+                elif self.order == "red":
                     aux_index = index - 1
                     if aux_index < 0:
                         continue
