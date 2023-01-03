@@ -1,15 +1,24 @@
-# 
-# Imports
-#
-
-print("Initialising")
-
-import pandas as pd
-
 import ampelmann
 from ampelmann.RoodGroen import RoodGroen
 
 import json
+import argparse
+import pandas as pd
+
+#
+# Argument parsing
+#
+
+parser = argparse.ArgumentParser(description='ampelmann RoodGroen - corpus filtering for the red and green word order')
+parser.add_argument('closed_items_path', type=str,
+					help='Path to the JSON file containing the closed items which will narrow down the search space')
+parser.add_argument('red_items_path', type=str,
+					help='Path to the text file containing the corpus hits of the red order type')
+parser.add_argument('green_items_path', type=str,
+					help='Path to the text file containing the corpus hits of the green order type')
+parser.add_argument('--output_path', type=str, nargs='?', default='RoodGroenAnthe.csv')
+
+args = parser.parse_args()
 
 #
 # Load corpus files
@@ -18,19 +27,19 @@ import json
 print("DATA: Loading closed items")
 
 # We use the "closed items" class as a way to narrow down the search space
-with open("closed_items_Rood_Groen.json", "rt") as reader:
+with open(args.closed_items_path, "rt") as reader:
     closed_class_items = json.loads(reader.read())
 
 print("DATA: Loading green sentences")
 
 # All "green" items, thanks Bram Vanroy!
-with open("WRPPB-groen.txt") as reader:
+with open(args.green_items_path) as reader:
     green_sentences = reader.read().split("\n")
 
 print("DATA: Loading red sentences")
 
 # All "red" items, thanks Bram Vanroy!
-with open("WRPPB-rood.txt") as reader:
+with open(args.red_items_path) as reader:
     red_sentences = reader.read().split("\n")
 
 # Build RoodGroen objects
@@ -60,10 +69,10 @@ red_df["order"] = "red"
 # Combine both data frames
 df = pd.concat([ green_df, red_df ])
 
-print("PANDAS: Writing CSV file")
+print(f"PANDAS: Writing CSV file {args.output_path}")
 
 # Write to CSV
-df.to_csv("RoodGroenAnthe.csv", index=False)
+df.to_csv(args.output_path, index=False)
 
 
 
