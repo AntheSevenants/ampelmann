@@ -12,7 +12,8 @@ ampelmann does *not* aim to be able to create datasets for every single research
 These instructions only have to be run once.
 
 1. Download and install [Python](https://www.python.org/).
-2. `git clone` this repository, or download and unzip [this archive](https://github.com/AntheSevenants/ampelmann/archive/refs/heads/main.zip).
+2. `git clone https://github.com/AntheSevenants/ampelmann.git`,   
+    or download and unzip [this archive](https://github.com/AntheSevenants/ampelmann/archive/refs/heads/main.zip).
 3. Open a terminal window. Navigate to the `ampelmann` directory:  
     `cd ampelmann`
 4. Create a new virtual environment:  
@@ -48,7 +49,7 @@ Ik weet dat hij een groene kikker gezien heeft.
 Weet jij waar chocomelk ontstaan is?
 ```
 
-You also need a "closed set" of items which will definitely appear in all your desired examples. The [flashtext](https://arxiv.org/abs/1711.00046) algorithm (thanks, @lemontheme) is used to quickly filter all sentences which are *definitely* not part of that set. In the case of the red and the green order, this file should include all possible auxiliaries which allow for a red and green alternation. This file is already included in the repository under [data/RoodGroen/closed_items.json](https://github.com/AntheSevenants/ampelmann/blob/main/data/RoodGroen/closed_items.json).
+You also need a "closed set" of items which will definitely appear in all your desired examples. The [flashtext](https://arxiv.org/abs/1711.00046) algorithm (thanks, [@lemontheme](https://github.com/lemontheme)) is used to quickly filter all sentences which are *definitely* not part of that set. In the case of the red and the green order, this file should include all possible auxiliaries which allow for a red and green alternation. This file is already included in the repository under [data/RoodGroen/closed_items.json](https://github.com/AntheSevenants/ampelmann/blob/main/data/RoodGroen/closed_items.json).
 
 To recreate my dataset, run the following command. Make sure your virtual environment is enabled!
 
@@ -61,5 +62,5 @@ python3 RoodGroen.py "data/RoodGroen/closed_items.json" "data/RoodGroen/WRPPB-ro
 
 ## Future work
 
-* Incorporate [xml_query](https://github.com/BramVanroy/xml_query) by @BramVanroy. This will allow for building datasets completely from scratch from Alpino-parsed corpora
+* Incorporate [xml_query](https://github.com/BramVanroy/xml_query) by [@BramVanroy](https://github.com/BramVanroy). This will allow for building datasets completely from scratch from Alpino-parsed corpora
 * Implement other case studies
