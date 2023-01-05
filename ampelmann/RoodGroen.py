@@ -33,6 +33,7 @@ class RoodGroen(CaseStudy):
        
             indices = [i for i, x in enumerate(pos_tags) if x == "VERB"]
             for index in indices:
+                aux_index = -1
                 if self.order == "green":
                     aux_index = index + 1
                     if aux_index > len(pos_tags) - 1:
