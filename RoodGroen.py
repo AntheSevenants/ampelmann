@@ -49,22 +49,25 @@ red = RoodGroen(red_sentences, closed_class_items, "red")
 print("FILTER: Filtering red and green items")
 
 # Filter sentences and bin spurious hits
-green_filtered_sentences, green_participles, green_auxiliaries = green.filter()
-red_filtered_sentences, red_participles, red_auxiliaries = red.filter()
+green_output = green.filter()
+red_output = red.filter()
 
 print("PANDAS: Preparing output")
 
 # Create a dataframe with all results for the green order
-green_df = pd.DataFrame({ "sentence": green_filtered_sentences,
-                          "participle": green_participles,
-                          "auxiliary": green_auxiliaries })
+green_df = pd.DataFrame({"sentence": green_output["filtered_sentences"],
+                         "participle": green_output["participles"],
+                         "auxiliary": green_output["auxiliaries"],
+                         "participle_index": green_output["participle_indices"],
+                         "aux_index": green_output["aux_indices"]})
 green_df["order"] = "green"
 
 # Create a dataframe with all results for the red order
-red_df = pd.DataFrame({ "sentence": red_filtered_sentences,
-                        "participle": red_participles,
-                        "auxiliary": red_auxiliaries })
-red_df["order"] = "red"
+red_df = pd.DataFrame({"sentence": red_output["filtered_sentences"],
+                       "participle": red_output["participles"],
+                       "auxiliary": red_output["auxiliaries"],
+                       "participle_index": red_output["participle_indices"],
+                       "aux_index": red_output["aux_indices"]})
 
 # Combine both data frames
 df = pd.concat([ green_df, red_df ])
